@@ -5,36 +5,42 @@
 
 
 const wordSearch = (letters, word) => {
-    const horizontalJoin = letters.map(ls => ls.join(''))
-    for (l of horizontalJoin) {
-        if (l.includes(word)) return true
+  if (letters.length === 0) {
+    return undefined;
+  }
+  // Evaluating vertical arrays
+  let newArr = [];
+  // Created a new empty array
 
-    } const verticalJoin = transpose(letters).map(ls => ls.join(''))
-    for (l of verticalJoin) {
-        if (l.includes(word)) return true
+  // Looped through matrix, and pushed in elements in the correct nested array
+  for (let i = 0; i < letters[0].length; i++) {
+    newArr.push([]);
+  }
 
+  for (let i = 0; i < letters[0].length; i++) {
+    for (let j = 0; j < letters[i].length; j++) {
+      newArr[j].push(letters[i][j]);
     }
-    return false;
+  }
 
-}
+  const verticalJoin = [];
+  for (let arr of newArr) {
+    verticalJoin.push(arr.join(""));
+  }
 
-module.exports = wordSearch
+  // console.log(verticalJoin);
 
-const transpose = function(matrix) {
+  // Evaluate vertical arrays
+  for (l of verticalJoin) {
+    if (l.includes(word)) return true;
+  }
 
-    //new array that will be populated with the values of the columns and rows switched
-    let newArr = [];
-    //loops thorugh the rows (arrays) of the matrix
-    for (let row of matrix) {
-        // loops through 
-        for (let col = 0; col < row.length; col++) {
+  // Evaluating horizontal arrays
+  const horizontalJoin = letters.map((ls) => ls.join(""));
+  for (l of horizontalJoin) {
+    if (l.includes(word)) return true;
+  }
+  return false;
+};
 
-            if (col > newArr.length - 1) {
-                //create 2D after checking newArr is empty
-                newArr.push([]);
-            }
-            newArr[col].push(row[col]); //check 
-        }
-    }
-    return newArr;
-}
+module.exports = wordSearch;
